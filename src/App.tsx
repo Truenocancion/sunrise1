@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import AddressInput from './AddressInput';
+import AddressLookupComponent from './AddressLookupComponent';
+import IntercomCodeDisplay from './IntercomCodeDisplay';
+import FlatsList from './FlatsList';
+import ContactForm from './ContactForm';
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
+  const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
+  const [intercomCode, setIntercomCode] = useState<string | null>(null);
+  
+  const handleAddressSelect = (address: string) => {
+    setSelectedAddress(address);
+    // Fetch intercom code from the database for the selected address
+    // Example: setIntercomCode(fetchIntercomCode(address));
+  };
+  // <AddressInput onSelect={handleAddressSelect} />
+  // <AddressLookupComponent />
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Address Selection</h1>
+      <AddressInput onSelect={handleAddressSelect} />
+      {selectedAddress && <IntercomCodeDisplay address={selectedAddress} setIntercomCode={setIntercomCode} />}
+      <FlatsList />
     </div>
   );
-}
+};
 
 export default App;
